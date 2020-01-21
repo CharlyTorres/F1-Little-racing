@@ -1,0 +1,28 @@
+.game {
+    display: flex;
+    justify-content: center;
+}
+
+canvas {
+    border: 1px solid black;
+}
+
+.index>div{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.f1logo {
+    width: 30%;
+}
+
+.letters {
+    width: 30%;
+    height: 70px;
+}
+
+.flags {
+    width: 30%;
+}
