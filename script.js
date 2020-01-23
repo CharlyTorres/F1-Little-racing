@@ -80,6 +80,10 @@ class Car1 {
     }
     rotateDown(){
       if(this.y >= 500) return
+      if(this.x < limit1.x + limit1.width &&
+        this.x + this.width > limit1.x &&
+        this.y < limit1.y + limit1.height &&
+        this.height + this.y > limit1.y) return
       this.y += 10
       this.car.src = images.mercedesdown
       this.width = 25
@@ -184,6 +188,21 @@ class Car2 {
 
   lapup = new Lapline()
 
+  class Limit1{
+    constructor(){
+    this.x = 130
+    this.y = 341
+    this.width = 820
+    this.height = 1
+    }
+    draw(){
+      ctx.fillStyle = "black"
+      ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+  }
+
+  let limit1 = new Limit1()
+
   function checkLaps() {
 
           if(firstCar.lapScore()) {
@@ -213,6 +232,7 @@ function update() {
     firstCar.draw()
     secondCar.draw()
     lapup.draw()
+    limit1.draw()
     ctx.fillText(String(lap), canvas.width - 100, 100)
     checkLaps()
 
