@@ -15,12 +15,99 @@ const images = {
     ferrari: './images/cars/ferrari.png',
     ferrarileft: './images/cars/ferrarileft.png',
     ferrariup: './images/cars/ferrariup.png',
-    ferraridown: './images/cars/ferraridown.png'
+    ferraridown: './images/cars/ferraridown.png',
+    menuimg: './images/menuimg.png',
+    ferrariwin: './images/ferrariwin.png',
+    mercedeswin: './images/mercedeswin.png'
   }
+
+const sounds = {
+  mainsound: './sounds/mariokart.mp3'
+}
 
 
 //ctx.fillStyle = '#5A9918 ';
 //ctx.fillRect(0, 0, 1100, 550);
+
+class Mainmenu{
+  constructor() {
+    this.x = 0
+    this.y = 0
+    this.width = canvas.width
+    this.height = canvas.height
+    this.img = new Image()
+    this.img.src = images.menuimg
+    this.img.onload = () => {
+      this.draw()
+    } 
+  }
+  draw() {
+   // this.x--
+    if (this.x < -canvas.width) this.x = 0
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    ctx.drawImage(
+      this.img,
+      this.x + canvas.width,
+      this.y,
+      this.width,
+      this.height
+    )
+  }
+}
+
+const menu = new Mainmenu()
+
+class Ferrariwin{
+  constructor() {
+    this.x = 0
+    this.y = 0
+    this.width = canvas.width
+    this.height = canvas.height
+    this.img = new Image()
+    this.img.src = images.ferrariwin
+     
+  }
+  draw() {
+   // this.x--
+    if (this.x < -canvas.width) this.x = 0
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    ctx.drawImage(
+      this.img,
+      this.x + canvas.width,
+      this.y,
+      this.width,
+      this.height
+    )
+  }
+}
+
+const ferrariwin = new Ferrariwin()
+
+class Mercedeswin{
+  constructor() {
+    this.x = 0
+    this.y = 0
+    this.width = canvas.width
+    this.height = canvas.height
+    this.img = new Image()
+    this.img.src = images.mercedeswin
+     
+  }
+  draw() {
+   // this.x--
+    if (this.x < -canvas.width) this.x = 0
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    ctx.drawImage(
+      this.img,
+      this.x + canvas.width,
+      this.y,
+      this.width,
+      this.height
+    )
+  }
+}
+
+const mercedeswin = new Mercedeswin()
 
 class SpeedWay{
     constructor() {
@@ -30,6 +117,9 @@ class SpeedWay{
       this.height = canvas.height
       this.img = new Image()
       this.img.src = images.bg
+      this.audio = new Audio()
+      this.audio.src = sounds.mainsound
+      this.audio.loop = true
       /* this.img.onload = () => {
         this.draw()
       } */
@@ -580,10 +670,8 @@ class Car2 {
               lap = 1
             }
             if (firstCar.lapScore() && lap === 1){
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              ctx.font = '100px serif'
-              ctx.fillStyle = 'green'
-              ctx.fillText(String('PUTOS TODOS'), 400, 500)
+              raceTrack.audio.pause()
+              mercedeswin.draw()
               clearInterval(interval)
 
 
@@ -596,10 +684,9 @@ class Car2 {
               lap = 1
             }
             if (secondCar.lapScore() && lap === 1){
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              ctx.font = '100px serif'
-              ctx.fillStyle = 'green'
-              ctx.fillText(String('PUTAS TODAS'), 400, 500)
+              //ctx.clearRect(0, 0, canvas.width, canvas.height)
+              raceTrack.audio.pause()
+              ferrariwin.draw()
               clearInterval(interval)
 
 
@@ -612,13 +699,15 @@ class Car2 {
  
   function startGame() {
     if (interval) return
-    interval = setInterval(update, 1000 / 60)
+    interval = setInterval(update, 1000 / 130)
+    raceTrack.audio.play()
   }
 
 
 function update() {
     frames++
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    menu.draw()
     raceTrack.draw()
     firstCar.draw()
     secondCar.draw()
@@ -646,9 +735,6 @@ function update() {
     location.href = 'index.html';
 }
 
-  document.querySelector('.start').onclick = () => {
-      startGame()
-  }
 
   document.querySelector('.fulls').onclick = () => {
     if (canvas.webkitRequestFullScreen) {
